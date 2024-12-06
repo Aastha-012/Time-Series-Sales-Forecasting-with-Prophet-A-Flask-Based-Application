@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Forecasting Application</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid black; }
+        th, td { padding: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Sales Forecasting Application</h1>
+    <form method="POST" action="/forecast">
+        <label for="forecast_period">Enter Forecast Period (in days):</label>
+        <input type="number" id="forecast_period" name="forecast_period" required>
+        <button type="submit">Generate Forecast</button>
+    </form>
+
+    {% if forecast_results %}
+    <h2>Forecast Results</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Predicted Sales (yhat)</th>
+                <th>Lower Bound (yhat_lower)</th>
+                <th>Upper Bound (yhat_upper)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in forecast_results %}
+            <tr>
+                <td>{{ row.ds }}</td>
+                <td>{{ row.yhat }}</td>
+                <td>{{ row.yhat_lower }}</td>
+                <td>{{ row.yhat_upper }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</body>
+</html>
